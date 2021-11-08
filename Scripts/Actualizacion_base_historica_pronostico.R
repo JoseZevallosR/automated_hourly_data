@@ -13,18 +13,20 @@ Subcuencas    <- 'urh_rsmCGS.shp'#CHECK
 File_obs      <- 'C:/Scripts_DHI/PRON_HOR/CHILLON_HOR/data/metadata/StationsP.csv'
 Filename      <- "PpObs_Act.csv"
 
+mean_temperature_path <- 'd:/Senamhi_consultoria_2021_2/code/CHILLON_HOR/data/obs/TEMP_CLIMATOLOGY/MEAN_TEMPERATURA.tif'
+station_path          <- 'd:/Senamhi_consultoria_2021_2/code/CHILLON_HOR/data/obs/ESTACIONES_CHILLON/shp/ubicacion.shp'
+chiriluv2_path        <-"d:/Senamhi_consultoria_2021_2/outputs/chirilu_2020/"
+historic_file_path    <- 'd:/Senamhi_consultoria_2021_2/code/CHILLON_HOR/data/obs/HISTORICO/Chillon_historic.csv'
+
+pronostico_path_ETA <- 'd:/Proyectos_GitHub/automated_hourly_data/data/CHILLON/pronostico/ETA/'
+pronostico_file_path_ETA  <-'d:/Proyectos_GitHub/automated_hourly_data/data/CHILLON/pronostico/ETA/pron_eta.csv'
+
 ################################## Fechas
 Dayi          <- Sys.Date()-1
 Dayf          <- Sys.Date()
 
 Time_ini_obs  <- paste0(Dayi ,' 01:00') 
 Time_end_obs  <- paste0(Dayf   ,' 00:00') 
-
-Time_ini_sat  <- paste0(Dayi ,' 06:00') 
-Time_end_sat  <- paste0(Dayf ,' 05:00') 
-
-Time_ini_sat2 <- paste0(Dayi ,' 05:00') 
-Time_end_sat2 <- paste0(Dayf   ,' 04:30') 
 
 Time_ini_pron  <- paste0(Sys.Date()   ,' 01:00')
 Time_end_pron  <- paste0(Sys.Date()+2 ,' 19:00') 
@@ -39,18 +41,18 @@ source("./src/operational_qc.R") # Control de calidad
 source("./src/points_inside_pixel.R") # Punto-grilla
 source("./src/interpolation.R") # Mezcla
 library(lubridate)
-library(foreach)
-library(doParallel)
+
 ##PISCO
 
 ppisco_p_max_monthly <- raster::stack("P:/PISCOnc/MAX_PPISCOpd.tif")
 ## CHIRILU area
 chirilu <- raster::extent(c(-77.4, -76, -12.3, -11)) 
 
-obs_data <- read.csv("C:/Scripts_DHI/PRON_HOR/CHILLON_HOR/data/obs/")
+obs_data <- read.csv("C:/Scripts_DHI/PRON_HOR/CHILLON_HOR/data/obs/INSTANTANEO/PpObs_Act.csv")
 
 obs_master<- read.csv("C:/Scripts_DHI/PRON_HOR/CHILLON_HOR/data/metadata/xyz_crl.csv",sep=',')
 
+#Actualizacion de las imagenes chirilu corregidas
 for (iter in 1:dim(obs_data)[1]){
   time_step=obs_data[iter,]
   PP=as.numeric(time_step[-1])
@@ -140,5 +142,12 @@ for (iter in 1:dim(obs_data)[1]){
 
 
 
+#Estation location
+points=raster::shapefile(station_path)
+#Climatological temperature data
+TEMP=stack(mean_temperature_path)
+update_historic_data(points,Time_ini_obs,Time_end_obs,chiriluv2_path,TEMP,historic_file_path)
 
 
+Downext_ETA10(pronostico_path, file='peru_prec_eta10',nomcuenca='CHILLON')
+update_pron_data(points,Time_ini_pron,Time_end_pron,pronostico_path,TEMP,historic_file_path,pron_file='ETA10_CHILLON_Act.nc')
