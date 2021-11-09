@@ -12,5 +12,5 @@ TEMP=stack(mean_temperature_path)
 chirilu=raster::stack('d:/Senamhi_consultoria_2021_2/datos/CHIRILUv2.nc')
 #points=readRDS('d:/Proyectos_GitHub/hourlyPrecMerge_rcl/data/processed/obs/obs_data_qc_v4.rds')
 result=meto_data_rsminerve(chirilu,TEMP,points)
-write.table(result,'d:/Proyectos_GitHub/automated_hourly_data/data/CHILLON/obs/HISTORICO/Chillon_historic.csv',sep = ',',row.names = F)
+write.table(na.omit(result),'d:/Proyectos_GitHub/automated_hourly_data/data/CHILLON/obs/HISTORICO/Chillon_historic.csv',sep = ',',row.names = F)
 

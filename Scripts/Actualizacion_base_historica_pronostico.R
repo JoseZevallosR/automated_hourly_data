@@ -21,6 +21,9 @@ historic_file_path    <- 'd:/Proyectos_GitHub/automated_hourly_data/data/CHILLON
 pronostico_path_ETA <- 'd:/Proyectos_GitHub/automated_hourly_data/data/CHILLON/pronostico/ETA/'
 pronostico_file_path_ETA  <-'d:/Proyectos_GitHub/automated_hourly_data/data/CHILLON/pronostico/ETA/pron_eta.csv'
 
+pronostico_path_GFS <- 'd:/Proyectos_GitHub/automated_hourly_data/data/CHILLON/pronostico/GFS/'
+pronostico_file_path_GFS  <-'d:/Proyectos_GitHub/automated_hourly_data/data/CHILLON/pronostico/GFS/pron_gfs.csv'
+
 ################################## Fechas
 Dayi          <- Sys.Date()-1
 Dayf          <- Sys.Date()
@@ -149,5 +152,14 @@ TEMP=stack(mean_temperature_path)
 update_historic_data(points,Time_ini_obs,Time_end_obs,chiriluv2_path,TEMP,historic_file_path)
 
 
-Downext_ETA10(pronostico_path, file='peru_prec_eta10',nomcuenca='CHILLON')
-update_pron_data(points,Time_ini_pron,Time_end_pron,pronostico_path,TEMP,historic_file_path,pron_file='ETA10_CHILLON_Act.nc')
+Downext_ETA10(pronostico_path_ETA, file='peru_prec_eta10',nomcuenca='CHILLON')
+update_pron_data(points,Time_ini_pron,Time_end_pron,pronostico_path_ETA,TEMP,historic_file_path,pron_file='ETA10_CHILLON_Act.nc',pronostico_file_path_ETA)
+
+
+Downext_GFS025(pronostico_path_GFS,file='peru_prec_gfs025',nomcuenca = 'CHILLON')
+update_pron_data(points,Time_ini_pron,Time_end_pron,pronostico_path_GFS,TEMP,historic_file_path,pron_file = 'GFS025_00_CHILLON_Act.nc',pronostico_file_path_GFS)
+
+
+
+
+
