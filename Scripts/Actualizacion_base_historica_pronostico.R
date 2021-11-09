@@ -16,7 +16,7 @@ Filename      <- "PpObs_Act.csv"
 mean_temperature_path <- 'd:/Senamhi_consultoria_2021_2/code/CHILLON_HOR/data/obs/TEMP_CLIMATOLOGY/MEAN_TEMPERATURA.tif'
 station_path          <- 'd:/Senamhi_consultoria_2021_2/code/CHILLON_HOR/data/obs/ESTACIONES_CHILLON/shp/ubicacion.shp'
 chiriluv2_path        <-"d:/Senamhi_consultoria_2021_2/outputs/chirilu_2020/"
-historic_file_path    <- 'd:/Senamhi_consultoria_2021_2/code/CHILLON_HOR/data/obs/HISTORICO/Chillon_historic.csv'
+historic_file_path    <- 'd:/Proyectos_GitHub/automated_hourly_data/data/CHILLON/obs/HISTORICO/Chillon_historic.csv'
 
 pronostico_path_ETA <- 'd:/Proyectos_GitHub/automated_hourly_data/data/CHILLON/pronostico/ETA/'
 pronostico_file_path_ETA  <-'d:/Proyectos_GitHub/automated_hourly_data/data/CHILLON/pronostico/ETA/pron_eta.csv'
